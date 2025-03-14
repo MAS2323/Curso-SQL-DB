@@ -164,14 +164,121 @@ SELECT COUNT(*) FROM usuarios;
 # esta sentencia sql nos devolvera cuantos elementos hay en la tabla usuarios 
 ```
 
+### Hacer una seleccion o una busqueda en nuestra tabla en funcion a una condicion usando LIKE 
 
+```sh
+SELECT * FROM usuarios 
+WHERER nombre LIKE 'lucas%'
 
+# usamos simbolos como % delante o detras de la palabro que queremos encontrar o inicial de las palabras que queremos encontrar 
 
+SELECT * FROM usuarios 
+WHERER nombre LIKE '%l%'
+# Esta consulta nos traera todos los nombres que se encuentren en nuestra tabla y contengan la letra L 
+# podemos cambiar esta condicion 
+```
+### Optimizando la instruccion LIKE 
+--- Cuando tengamos muchos datos en nuestra bases de datos no sera necesario poner el signo de % al principio de la palabra o letra clave, con ponerlo al final basta eso hace mas rapido la DB 
 
+### La instruccion WHERE funciona igual tanto para el SELECT, DELETE y el UPDATE
 
+```sh
+# Actualizar un usuario ennuestra tabla cursos
+UPDATE usuarios 
+SET nombre = 'Pepe',
+apellido = 'Ugano'
+WHERER nombre LIKE '%l%'
+```
 
+```sh 
+# Eliminar un usuario en nuestra tabla 
+DLETE FROM usuarios 
+WHERE apellido LIKE 'o%';
+```
+### Algunas consultas complejas en nuestra DB 
 
+```sh 
+# la instruccion CONCAT sirve para concatenar el el nombre y el apellido para que  al realizar la consulta no obtengamos dos tablas sino una linea 
 
+# en esta consulata estaremos haciendola en dos tablas, para abreviar el nombre de nuestras tablas podemos usar cualquier letra que queramos o combinavion 
+# en nuestro ejempo hemos usado p y u 
+SELECT p.*,
+CONCAT(u.nombre,'',u.apellido) as 'autor'
+FROM publicaciones p, usuarios u
+WHERE p.autor_id = u.id;
+```
+### Cosas a tener en cuenta 
+--- A la hora de hacer este tipo de consultas no es recomendable utilizar la instruccion WHERE para establecer la condicion porque no es optimo  lo mas recomendable es utilizar los JOIN 
 
+### INNER JOIN 
 
-	
+```sh
+SELECT p.id,
+p.titulo,
+p.texto,
+CONCAT(u.nombre,'',u.apellido) as 'autor'
+FROM publicaciones p INNER JOIN usuarios u
+ON p.autor_id = u.id;
+```
+
+```sh 
+-- SQL Para Estadisticas 
+-- FUNCION             DESCRIPCION
+-- COUNT(*)            Cuenta la cantidad de filas 
+-- MAX(puntaje)       Devuelve el maximo puntaje 
+-- MIN(puntaje)     Devuelve el minimo puntaje 
+-- AVG(puntaje)     Devuelve el puntaje promedio 
+-- SUM(precio)         Devuelve una suma de precios
+```
+	```sh 
+	mysql> SELECT * FROM productos;
++----+------------+--------+
+| id | nombre     | precio |
++----+------------+--------+
+|  1 | Zapatilla  |     30 |
+|  2 | Pantalones |     45 |
+|  3 | Camisa     |     23 |
+|  4 | Perfume    |     33 |
++----+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) FROM productos;
++----------+
+| COUNT(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(precio) FROM productos;
++-------------+
+| MAX(precio) |
++-------------+
+|          45 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(precio) FROM productos;
++-------------+
+| MIN(precio) |
++-------------+
+|          23 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(precio) FROM productos;
++-------------+
+| AVG(precio) |
++-------------+
+|       32.75 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(precio) FROM productos;
++-------------+
+| SUM(precio) |
++-------------+
+|         131 |
++-------------+
+1 row in set (0.00 sec)
+```
