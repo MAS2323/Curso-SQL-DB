@@ -282,3 +282,53 @@ mysql> SELECT SUM(precio) FROM productos;
 +-------------+
 1 row in set (0.00 sec)
 ```
+##  SUBCONSULTAS EN SQL 
+
+```sh
+# Estas son ejemplos de subconsultas simples, esto se puede volver muy complejo dependiendo de las necesidades de creador 
+-- En esta consulta nos traeran a todos las publicaciones cuyo nombre de autores 
+-- contengan una m 
+SELECT * FROM curso.publicaciones WHERE autor_id IN (
+SELECT id FROM curso.usuarios WHERE nombre LIKE 'M%'
+);
+
+-- En esta consulta nos traeran a todos las publicaciones cuyo nombre de autores 
+-- no contengan una m 
+SELECT * FROM curso.publicaciones WHERE autor_id NOT IN (
+SELECT id FROM curso.usuarios WHERE nombre LIKE 'M%'
+);
+```
+### Agrupacion de consultas 
+```sh
+# podemos hacer unos UNION  esto
+
+SELECT * FROM curso.usuarios WHERE nombre LIKE 'M%'
+UNION
+SELECT * FROM curso.usuarios WHERE nombre LIKE 'l%';
+```
+## GROUP BY 
+### se usa esta consulta para agrupar en funcion a una condicion 
+
+```sh
+-- GROUP BY 
+-- La funcion del GROUP BY es la de no reetir un valor si se encuentra mas 
+-- de una ves en la columna seleccionada 
+SELECT * FROM curso.usuarios GROUP BY nombre;
+SELECT apellido, COUNT(*) AS total_usuarios
+FROM curso.usuarios
+GROUP BY apellido;
+```
+--- La consulta GROUP BY es mas util cuando estamos trabajndo con fechas
+-- si quereos hacer una agrupacion en funcion a una fecha 
+
+
+```sh
+-- GROUP BY 
+-- La funcion del GROUP BY es la de no reetir un valor si se encuentra mas 
+-- de una ves en la columna seleccionada 
+SELECT * FROM curso.usuarios GROUP BY nombre;
+SELECT apellido, COUNT(*) AS total_usuarios
+FROM curso.usuarios
+GROUP BY apellido;
+```
+
