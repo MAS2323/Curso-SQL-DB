@@ -331,4 +331,14 @@ SELECT apellido, COUNT(*) AS total_usuarios
 FROM curso.usuarios
 GROUP BY apellido;
 ```
+### Si queremos ver los campos que tiene una tabla de nuestra base de datos usamos los siguientes comandos 
+
+```sh
+DESCRIBE nombre_de_la_tabla;
+O
+SWOW COLUMNS FROM nombre_de_la_tabla;
+```
+
+
+
 
